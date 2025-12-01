@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.youpaki.ferrarivsads"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:installLocation="auto">
+    
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true" />
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <application
+        android:label="@string/godot_project_name_string"
+        android:allowBackup="false"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:icon="@mipmap/icon"
+        android:isGame="true"
+        android:hasFragileUserData="false"
+        android:requestLegacyExternalStorage="false">
+        
+        <!-- AdMob App ID -->
+        <!-- Using Google Test App ID for development -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+        
+        <activity
+            android:name="com.godot.game.GodotApp"
+            android:theme="@style/GodotAppMainTheme"
+            android:exported="true"
+            android:label="@string/godot_project_name_string">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

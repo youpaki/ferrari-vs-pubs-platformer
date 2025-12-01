@@ -1,3 +1,15 @@
 # Godot 4+ specific ignores
 .godot/
-/android/
+
+# Android build outputs
+/android/.build/
+/android/build/build/
+/android/build/.gradle/
+/android/build/gradle/
+*.keystore
+*.apk
+*.aab
+
+# Keep AndroidManifest.xml and plugins
+!/android/build/AndroidManifest.xml
+!/android/plugins/
