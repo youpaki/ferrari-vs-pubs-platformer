@@ -2,6 +2,7 @@ extends Node
 
 # AdMob Manager pour afficher des vraies publicités
 # Plugin requis: https://github.com/Poing-Studios/godot-admob-android
+# NOTE: AdMob fonctionne UNIQUEMENT sur Android/iOS exporté, PAS dans l'éditeur Godot
 
 # IDs de test AdMob (remplacer par vos vrais IDs en production)
 const INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"  # Test ID
@@ -10,11 +11,14 @@ const REWARDED_AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917"  # Test ID
 var admob_singleton = null
 var is_initialized: bool = false
 var interstitial_loaded: bool = false
+var is_mobile_platform: bool = false
 
 signal ad_closed
 signal ad_failed_to_load
 
 func _ready() -> void:
+	# Détecter si on est sur mobile
+	is_mobile_platform = OS.get_name() == "Android" or OS.get_name() == "iOS"
 	_initialize_admob()
 
 func _initialize_admob() -> void:
@@ -30,7 +34,10 @@ func _initialize_admob() -> void:
 		# Charger la première pub
 		_load_interstitial()
 	else:
-		print("⚠️ AdMob plugin non trouvé - Mode simulation")
+		if is_mobile_platform:
+			print("⚠️ AdMob plugin non trouvé sur mobile - Vérifier l'installation")
+		else:
+			print("ℹ️ Mode développement PC - AdMob fonctionne uniquement sur Android/iOS")
 		is_initialized = false
 
 func _load_interstitial() -> void:
@@ -53,7 +60,10 @@ func show_death_ad() -> void:
 		print("🎬 Affichage de la publicité!")
 		admob_singleton.show_interstitial()
 	else:
-		print("⚠️ Pub simulée (plugin non installé)")
+		if is_mobile_platform:
+			print("⚠️ Impossible d'afficher la pub - Plugin non chargé ou pub non prête")
+		else:
+			print("💻 Simulation de pub (Mode PC - 2 secondes)")
 		# Simuler une pub avec un délai
 		await get_tree().create_timer(2.0).timeout
 		ad_closed.emit()
